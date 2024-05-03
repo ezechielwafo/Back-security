@@ -65,4 +65,7 @@ public class User implements UserDetails {
         return true;
     }
 
+    public Role[] getRoles() {
+        return null;
+    }
 }

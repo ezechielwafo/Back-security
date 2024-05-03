@@ -16,8 +16,8 @@ import java.util.function.Function;
 
 @Service
 public class JwtService {
-    private static final String SECRET_KEY="5dfbbaaa6863a366dec29109b41353c9593d61886c066f91b688f0d7be2559f6";
-
+    private static final String SECRET_KEY="ZVfpytppE9idXrF/5Fi85VZbXWnQ/nIxjz5Zan15SC4cBP2UqEr12E6/ruUib9dds79Pd2BxhI2QiBWz5LxErg==";
+//    private String secretkey="5dfbbaaa6863a366dec29109b41353c9593d61886c066f91b688f0d7be2559f6";
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
     }
@@ -40,11 +40,10 @@ public class JwtService {
                 .setSubject(userDetails.getUsername())//definit le sujet du jeton name
                 .setIssuedAt(new Date(System.currentTimeMillis())) // date emision
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 *60 *24)) //data expiration 24 apres creation
-                .signWith(getSignInKey(), SignatureAlgorithm.HS256) //signe le jeton a partie de getS
+                .signWith(getSignInKey(), SignatureAlgorithm.HS512) //signe le jeton a partie de getS
                 .compact(); //finalise en compacte en une chaine de caractere
     }
     //verification de la valid du token
-
     public boolean isTokenValid (String token, UserDetails userDetails){
         final String username = extractUsername(token);
         return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);
@@ -68,4 +67,5 @@ public class JwtService {
         byte[] keyBytes= Decoders.BASE64.decode(SECRET_KEY);// decoder la cle secret en hex
         return Keys.hmacShaKeyFor(keyBytes);//creer la clee  signature
     }
+
 }

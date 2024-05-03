@@ -14,6 +14,7 @@ spring:
     jpa:
       repositories:
         enabled: true
-
+  main:
+    allow-circular-references: true
 server:
   port: 8090
